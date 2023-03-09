@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Login Form</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+    <form id="login-form">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username">
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password">
+      <input type="submit" value="Submit">
+    </form>
+    </div>
+    <p id="message"></p>
+    <style>
+      body {
+        background-color: #fff;
+        color: #444;
+        font-family: 'Helvetica Neue', sans-serif;
+        font-size: 14px;
+        line-height: 1.6em;
+        margin: 0;
+      }
+      .container {
+        margin: 50px auto;
+        width: 300px;
+      }
+      form {
+        background-color: #fff;
+        border: 1px solid #e4e4e4;
+        border-radius: 3px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        padding: 20px 30px;
+      }
+      label {
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+      }
+      input[type="text"], input[type="password"] {
+        border: 1px solid #e4e4e4;
+        border-radius: 3px;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.1);
+        display: block;
+        font-size: 16px;
+        height: 50px;
+        margin-bottom: 20px;
+        padding: 0 10px;
+        width: 100%;
+      }
+      input[type="submit"] {
+        background-color: #28a745;
+        border: 2px solid #28a745;
+        border-radius: 3px;
+        color: #fff;
+        display: block;
+        font-size: 16px;
+        font-weight: bold;
+        height: 50px;
+        margin-top: 20px;
+        padding: 0 10px;
+        width: 100%;
+      }
+      input[type="submit"]:hover {
+        background-color: #218838;
+        border: 2px solid #1e7e34;
+        cursor: pointer;
+      }
+
+    </style>
+    <script>
+      $('#login-form').submit(function(event) {
+        event.preventDefault();
+        var username = $('#username').val();
+        var password = $('#password').val();
+        if (username == '0' || password == '0') {
+          $('#message').html('Please enter a username and password.');
+        } else {
+          $.ajax({
+            url: 'login.php',
+            type: 'POST',
+            data: $('#login-form').serialize(),
+            success: function(data) {
+              if (data == 'success') {
+                $('#message').html('Welcome, ' + username + '!');
+              } else {
+                $('#message').html('Invalid username or password.');
+              }
+            }
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
